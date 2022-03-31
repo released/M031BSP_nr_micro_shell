@@ -100,6 +100,17 @@ void custom_cmd_nvic_reset(char argc, char *argv)
 	set_flag(flag_console_sys_nvic_reset , ENABLE);
 }
 
+void custom_cmd_list_qmark(char argc, char *argv)
+{
+	unsigned int i = 0;
+
+	for (i = 0; nr_shell.static_cmd[i].fp != NULL; i++)
+	{
+		shell_printf("%s",nr_shell.static_cmd[i].cmd);
+		shell_printf("\r\n");
+	}
+}
+
 
 /**
  * @brief ls command
@@ -158,6 +169,8 @@ const static_cmd_st static_cmd[] =
 	{
 		{"ls", shell_ls_cmd},
 		{"test", shell_test_cmd},
+
+		{"?", custom_cmd_list_qmark},		
 		{"sys_nvic_reset", custom_cmd_nvic_reset},
 		{"sys_chip_reset", custom_cmd_chip_reset},
 		{"gpio_on", custom_cmd_gpio_on},
